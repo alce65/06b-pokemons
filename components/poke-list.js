@@ -2,19 +2,25 @@ import { Component } from './component.js';
 
 export class PokeList extends Component {
     #template;
-    #pokeList;
-    constructor(selector, pokelist) {
+    #state;
+    constructor(selector, state) {
         super();
-        this.#pokeList = pokelist;
+        this.#state = state;
         this.#template = this.#createTemplate();
         this.render(selector, this.#template);
     }
 
     #createTemplate() {
+        const final = this.#state.nextUrl
+            ? this.#state.nextUrl.split('=')[1].split('&')[0]
+            : this.#state.count;
+        const initial = final - 19;
         let template = `
-            <h2>Lista de Pokemos</h2>
+            <h2>Lista de Pokemos (${initial} - ${final} / ${
+            this.#state.count
+        })</h2>
             <ul class="poke-list__list">`;
-        this.#pokeList.forEach((poke) => {
+        this.#state.pokeData.forEach((poke) => {
             template += `
                 <li class="poke-item">
                     <a class="poke-item__link" href='./detail.html?id=${poke.id}'>
@@ -32,18 +38,7 @@ export class PokeList extends Component {
                 </li>`;
         });
 
-        template += `</ul>
-            <div class="pagination">
-                <button class="pagination__button" type="button">
-                    <i class="fas fa-backward"></i>
-                    <span>Anterior</span>
-                </button>
-                <button class="pagination__button" type="button">
-                    <span>Siguiente</span>
-                    <i class="fas fa-forward"></i>
-                </button>
-            </div>
-        `;
+        template += `</ul><div class="pagination"></div>`;
         return template;
     }
 }
