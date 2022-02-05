@@ -1,0 +1,41 @@
+{
+    "name": "06b-pokemons",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start": "echo Start",
+        "test": "jest --watchAll",
+        "lint": "eslint"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@babel/plugin-transform-modules-commonjs": "^7.16.8",
+        "@testing-library/dom": "^8.11.3",
+        "@testing-library/user-event": "^13.5.0",
+        "eslint": "^8.7.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-jest": "^26.0.0",
+        "jest": "^27.4.7"
+    },
+    "prettier": {
+        "singleQuote": true
+    },
+    "babel": {
+        "env": {
+            "test": {
+                "plugins": [
+                    "@babel/plugin-transform-modules-commonjs"
+                ]
+            }
+        }
+    },
+    "jest": {
+        "testEnvironment": "jsdom"
+    }
+}
