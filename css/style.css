@@ -118,6 +118,16 @@ li {
     height: 3rem;
 }
 
+.poke-detail ul,
+.poke-detail li {
+    padding-left: 0.5rem;
+}
+.poke-detail > ul > li > span,
+.poke-detail > ul > li > details > summary {
+    color: var(--color_favorite);
+    font-weight: 400;
+}
+
 .footer {
     margin-top: 1rem;
     display: grid;

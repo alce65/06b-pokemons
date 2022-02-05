@@ -22,7 +22,7 @@ async function app() {
                 new MyPokeList('.my-poke-list');
                 break;
             default:
-                new PokeDetail('.poke-detail');
+                new PokeDetail('.poke-detail', state);
                 break;
         }
     });

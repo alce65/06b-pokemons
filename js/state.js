@@ -27,10 +27,10 @@ export class State {
 
         this.pokeData = initialPokeList.results.map((item) => {
             const id = item.url.split('/').at(-2);
-            const sprites = fullPokes.find((poke) => {
+            const fullPoke = fullPokes.find((poke) => {
                 return poke.name === item.name;
-            })?.sprites;
-            return { ...item, id: id, sprites: sprites };
+            });
+            return { ...item, id: id, ...fullPoke };
         });
 
         /*return initialPokeList.results.reduce(async (prev, item) => {
