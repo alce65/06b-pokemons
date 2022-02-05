@@ -13,7 +13,7 @@ export class PokeList extends Component {
             <h2>Lista de Pokemos</h2>
             <div class="poke-list">`;
         template += `
-        <a href='./detail.html?id=1'>un pokemon</a>
+        <a class="poke-item__link" href='./detail.html?id=1'>un pokemon</a>
         `;
         template += `</div>`;
         return template;

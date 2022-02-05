@@ -1,3 +1,4 @@
+import { Footer } from '../components/footer.js';
 import { Header } from '../components/header.js';
 import { MyPokeList } from '../components/my-poke-list.js';
 import { PokeDetail } from '../components/poke-detail.js';
@@ -19,8 +20,7 @@ function app() {
             new PokeDetail('.poke-detail');
             break;
     }
-
-    // new Footer('#footer');
+    new Footer('.footer');
 }
 
 document.addEventListener('DOMContentLoaded', app);
