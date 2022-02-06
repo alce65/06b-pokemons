@@ -9,19 +9,16 @@ export class FavoriteIcon extends Component {
         this.#state = state;
         this.#pokeId = pokeId;
         this.#template = this.#createTemplate();
-        this.renderOuter(selector, this.#template);
-        this.manageComponent(selector);
+        this.render(selector, this.#template);
+        this.#manageComponent(selector);
     }
 
     #createTemplate() {
-        let template = `
-            <span class="poke-item__fav">
-                <i class="icon--score far fa-heart"></i>
-            </span>`;
+        let template = `<i class="icon--score far fa-heart"></i>`;
         return template;
     }
 
-    manageComponent(selector) {
+    #manageComponent(selector) {
         const componentElement = document.querySelector(selector);
         const icon = componentElement.querySelector('.poke-item__fav i');
         if (this.#state.favorites.find((item) => +item.id === +this.#pokeId)) {
@@ -31,10 +28,10 @@ export class FavoriteIcon extends Component {
             icon.classList.add('far');
             icon.classList.remove('fas');
         }
-        icon.addEventListener('click', this.handleIconFavorite.bind(this));
+        icon.addEventListener('click', this.#handleIconFavorite.bind(this));
     }
 
-    handleIconFavorite(ev) {
+    #handleIconFavorite(ev) {
         ev.preventDefault();
         ev.target.classList.toggle('far');
         ev.target.classList.toggle('fas');

@@ -1,4 +1,5 @@
 import { Component } from './component.js';
+import { FavoriteIcon } from './favorite-icon.js';
 
 export class PokeList extends Component {
     #state;
@@ -10,7 +11,7 @@ export class PokeList extends Component {
         this.#pokeData = pokeData;
         this.#template = this.#createTemplate(selector);
         this.render(selector, this.#template);
-        this.manageComponent(selector);
+        this.#manageComponent(selector);
     }
 
     #createTemplate(selector) {
@@ -27,40 +28,17 @@ export class PokeList extends Component {
                             src="${poke.sprites?.back_default}" alt="${poke.name}">
                         </span>
                     </a>
-                    <span class="poke-item__fav"></span>
-                    <span class="poke-item__fav">
-                        <i class="icon--score far fa-heart" data-id=${poke.id}></i>
-                    </span>
+                    <span class="poke-item__fav" id="fav-${poke.id}" data-id="${poke.id}" ></span>
                 </li>`;
         });
         return template;
     }
 
-    manageComponent(selector) {
+    #manageComponent(selector) {
         const componentElement = document.querySelector(selector);
-        const icons = componentElement.querySelectorAll('.poke-item__fav i');
+        const icons = componentElement.querySelectorAll('.poke-item__fav');
         icons.forEach((icon) => {
-            if (
-                this.#state.favorites.find(
-                    (item) => +item.id === +icon.dataset.id
-                )
-            ) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
-            } else {
-                icon.classList.add('far');
-                icon.classList.remove('fas');
-            }
-            icon.addEventListener('click', this.handleIconFavorite.bind(this));
-        });
-    }
-
-    handleIconFavorite(ev) {
-        ev.preventDefault();
-        ev.target.classList.toggle('far');
-        ev.target.classList.toggle('fas');
-        this.#state.changeFavorites(ev.target.dataset.id).then(() => {
-            console.log('Favorite state changed');
+            new FavoriteIcon('#' + icon.id, this.#state, icon.dataset.id);
         });
     }
 }
