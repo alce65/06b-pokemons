@@ -18,7 +18,7 @@ export class HomePokeList extends Component {
             : this.#state.count;
         const initial = final - 19;
         let template = `
-            <h2>Lista de Pokemos (${initial} - ${final} / ${
+            <h2>Lista de Pokemons (${initial} - ${final} / ${
             this.#state.count
         })</h2>
             <ul class="poke-list__list"></ul>`;

@@ -1,3 +1,4 @@
+import { detailUrlParse } from '../js/helpers.js';
 import { Component } from './component.js';
 import { FavoriteIcon } from './favorite-icon.js';
 
@@ -9,9 +10,9 @@ export class PokeDetail extends Component {
     #pokeData;
     constructor(selector, state) {
         super();
-        this.#pokeId = Number(location.search.split('=')[1].split('&')[0]);
-        this.#origin = location.search.split('=')[2];
-        console.log();
+        const { pokeId, origin } = detailUrlParse();
+        this.#pokeId = pokeId;
+        this.#origin = origin;
         this.#state = state;
         if (this.#origin === '.my-poke-list__list') {
             this.#pokeData = this.#state.favorites.find(
@@ -32,7 +33,7 @@ export class PokeDetail extends Component {
             <h2 class="detail-title">
                 <span>Detalles del Pokemon ${this.#pokeId}:</span>
                 <span class="detail-title__poke-name">
-                    ${this.#pokeData.name}
+                    ${this.#pokeData?.name}
                 </span>
                 <span class="poke-item__fav"></span>
             </h2>
