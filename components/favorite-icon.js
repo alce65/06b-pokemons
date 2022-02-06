@@ -1,4 +1,5 @@
 import { Component } from './component.js';
+import { MyPokeList } from './my-poke-list.js';
 
 export class FavoriteIcon extends Component {
     #state;
@@ -35,7 +36,10 @@ export class FavoriteIcon extends Component {
         ev.preventDefault();
         ev.target.classList.toggle('far');
         ev.target.classList.toggle('fas');
-        this.#state.changeFavorites(this.#pokeId).then(() => {
+        this.#state.changeFavorites(this.#pokeId).then((state) => {
+            if (document.querySelector('.my-poke-list')) {
+                new MyPokeList('.my-poke-list', state);
+            }
             console.log('Favorite state changed');
         });
     }

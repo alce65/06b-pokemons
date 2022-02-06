@@ -51,8 +51,6 @@ export class Pagination extends Component {
                     document.dispatchEvent(new Event('stateLoaded'));
                 });
                 break;
-            default:
-                console.log(this.#state);
         }
     }
 }

@@ -1,4 +1,3 @@
-import { MyPokeList } from '../components/my-poke-list.js';
 import { URL_POKE_API, URL_FAVORITES } from './config.js';
 import { apiServices } from './api-services.js';
 
@@ -53,16 +52,14 @@ export class State {
         if (this.favorites.find((item) => +item.id === +id)) {
             let resp = await apiServices().removePoke(URL_FAVORITES + id);
             this.favorites = this.favorites.filter((item) => +item.id !== +id);
-            if (document.querySelector('.my-poke-list')) {
-                new MyPokeList('.my-poke-list', this);
-            }
-            console.log(resp);
+            console.log({ resp });
         } else {
             const newFavorite = this.pokeData.find((item) => +item.id === +id);
             let resp = await apiServices().addPoke(URL_FAVORITES, newFavorite);
             this.favorites = [...this.favorites, resp];
-            console.log(resp);
+            console.log({ resp });
         }
+        return this;
     }
 
     getDetail(origin, pokeId) {

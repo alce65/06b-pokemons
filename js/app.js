@@ -8,10 +8,9 @@ import { State } from './state.js';
 
 async function app() {
     const state = new State();
-    console.log('Index loaded');
+    console.log('App loaded', location.pathname);
     new Header('.header');
     new Footer('.footer');
-    console.log(location.pathname);
     document.addEventListener('stateLoaded', () => {
         switch (location.pathname) {
             case '/':
