@@ -7,6 +7,7 @@
     "scripts": {
         "start": "echo Start",
         "test": "jest --watchAll",
+        "test:cover": "jest --watchAll --coverage",
         "lint": "eslint"
     },
     "keywords": [],
