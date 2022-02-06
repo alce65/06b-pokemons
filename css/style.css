@@ -50,7 +50,8 @@ li {
     text-decoration: none;
     color: inherit;
 }
-.poke-list__list {
+.poke-list__list,
+.my-poke-list__list {
     display: grid;
     grid-template-columns: auto;
     gap: 1rem;
@@ -69,7 +70,7 @@ li {
     display: flex;
     align-items: center;
 }
-.poke-item__link-label::first-letter {
+.poke-item__link-label {
     text-transform: capitalize;
 }
 
@@ -118,6 +119,13 @@ li {
     height: 3rem;
 }
 
+.detail-title__poke-name {
+    color: var(--color_secondary);
+    font-size: 1.6em;
+    padding-left: 0.3em;
+    text-transform: capitalize;
+}
+
 .poke-detail ul,
 .poke-detail li {
     padding-left: 0.5rem;
@@ -141,13 +149,15 @@ li {
 }
 
 @media (min-width: 550px) {
-    .poke-list__list {
+    .poke-list__list,
+    .my-poke-list__list {
         grid-template-columns: auto auto;
     }
 }
 
 @media (min-width: 850px) {
-    .poke-list__list {
+    .poke-list__list,
+    .my-poke-list__list {
         grid-template-columns: auto auto auto;
     }
 }

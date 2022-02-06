@@ -1,12 +1,14 @@
-import { URL_POKE_API } from './config.js';
+import { MyPokeList } from '../components/my-poke-list.js';
+import { URL_POKE_API, URL_FAVORITES } from './config.js';
 
 export class State {
     count;
     nextUrl;
     previousUrl;
     pokeData;
+    favorites;
     constructor() {
-        this.hydrateData().then(() => {
+        Promise.all([this.hydrateData(), this.hydrateFavorites()]).then(() => {
             console.log(this);
             document.dispatchEvent(new Event('stateLoaded'));
         });
@@ -42,10 +44,46 @@ export class State {
     }, []); */
     }
 
+    async hydrateFavorites() {
+        this.favorites = await this.#fetchPoke(URL_FAVORITES);
+    }
+
     async #fetchPoke(url) {
         const resp = await fetch(url, {
             mode: 'cors',
         });
         return resp.json();
+    }
+
+    async #addPoke(url, body) {
+        const resp = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: new Headers({
+                'Content-type': 'application/json',
+            }),
+        });
+        return resp.json();
+    }
+
+    async #removePoke(url) {
+        const resp = await fetch(url, {
+            method: 'DELETE',
+        });
+        return resp.json();
+    }
+
+    async changeFavorites(id) {
+        if (this.favorites.find((item) => +item.id === +id)) {
+            let resp = await this.#removePoke(URL_FAVORITES + id);
+            this.favorites = this.favorites.filter((item) => +item.id !== +id);
+            new MyPokeList('.my-poke-list', this);
+            console.log(resp);
+        } else {
+            const newFavorite = this.pokeData.find((item) => +item.id === +id);
+            let resp = await this.#addPoke(URL_FAVORITES, newFavorite);
+            this.favorites = [...this.favorites, resp];
+            console.log(resp);
+        }
     }
 }
