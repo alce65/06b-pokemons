@@ -1,4 +1,5 @@
 import { Component } from './component.js';
+import { FavoriteIcon } from './favorite-icon.js';
 
 export class PokeDetail extends Component {
     #state;
@@ -23,6 +24,7 @@ export class PokeDetail extends Component {
         }
         this.#template = this.#createTemplate();
         this.render(selector, this.#template);
+        new FavoriteIcon('.poke-item__fav', state, this.#pokeId);
     }
 
     #createTemplate() {
@@ -32,6 +34,7 @@ export class PokeDetail extends Component {
                 <span class="detail-title__poke-name">
                     ${this.#pokeData.name}
                 </span>
+                <span class="poke-item__fav"></span>
             </h2>
             <div class="poke-detail">`;
         template += `<ul>${this.#showPokeData(this.#pokeData)}</ul>`;

@@ -77,7 +77,9 @@ export class State {
         if (this.favorites.find((item) => +item.id === +id)) {
             let resp = await this.#removePoke(URL_FAVORITES + id);
             this.favorites = this.favorites.filter((item) => +item.id !== +id);
-            new MyPokeList('.my-poke-list', this);
+            if (document.querySelector('.my-poke-list')) {
+                new MyPokeList('.my-poke-list', this);
+            }
             console.log(resp);
         } else {
             const newFavorite = this.pokeData.find((item) => +item.id === +id);
