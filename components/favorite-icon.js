@@ -14,13 +14,13 @@ export class FavoriteIcon extends Component {
     }
 
     #createTemplate() {
-        let template = `<i class="icon--score far fa-heart"></i>`;
+        let template = `<i role="button" class="icon--score far fa-heart"></i>`;
         return template;
     }
 
     #manageComponent(selector) {
         const componentElement = document.querySelector(selector);
-        const icon = componentElement.querySelector('.poke-item__fav i');
+        const icon = componentElement.querySelector('i');
         if (this.#state.favorites.find((item) => +item.id === +this.#pokeId)) {
             icon.classList.remove('far');
             icon.classList.add('fas');

@@ -14,15 +14,7 @@ export class PokeDetail extends Component {
         this.#pokeId = pokeId;
         this.#origin = origin;
         this.#state = state;
-        if (this.#origin === '.my-poke-list__list') {
-            this.#pokeData = this.#state.favorites.find(
-                (poke) => poke.id === this.#pokeId
-            );
-        } else {
-            this.#pokeData = this.#state.pokeData.find(
-                (poke) => poke.id === this.#pokeId
-            );
-        }
+        this.#pokeData = this.#state.getDetail(this.#origin, this.#pokeId);
         this.#template = this.#createTemplate();
         this.render(selector, this.#template);
         new FavoriteIcon('.poke-item__fav', state, this.#pokeId);
@@ -33,7 +25,7 @@ export class PokeDetail extends Component {
             <h2 class="detail-title">
                 <span>Detalles del Pokemon ${this.#pokeId}:</span>
                 <span class="detail-title__poke-name">
-                    ${this.#pokeData?.name}
+                    ${this.#pokeData.name}
                 </span>
                 <span class="poke-item__fav"></span>
             </h2>

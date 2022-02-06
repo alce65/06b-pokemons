@@ -1,5 +1,6 @@
 import { MyPokeList } from '../components/my-poke-list.js';
 import { URL_POKE_API, URL_FAVORITES } from './config.js';
+import { apiServices } from './api-services.js';
 
 export class State {
     count;
@@ -15,14 +16,14 @@ export class State {
     }
 
     async hydrateData(url = URL_POKE_API) {
-        const initialPokeList = await this.#fetchPoke(url);
+        const initialPokeList = await apiServices().fetchPoke(url);
         this.count = initialPokeList.count;
         this.nextUrl = initialPokeList.next;
         this.previousUrl = initialPokeList.previous;
 
         const fullPokes = await Promise.all(
             initialPokeList.results.map(async (item) => {
-                const pokeData = await this.#fetchPoke(item.url);
+                const pokeData = await apiServices().fetchPoke(item.url);
                 return pokeData;
             })
         );
@@ -45,37 +46,12 @@ export class State {
     }
 
     async hydrateFavorites() {
-        this.favorites = await this.#fetchPoke(URL_FAVORITES);
-    }
-
-    async #fetchPoke(url) {
-        const resp = await fetch(url, {
-            mode: 'cors',
-        });
-        return resp.json();
-    }
-
-    async #addPoke(url, body) {
-        const resp = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: new Headers({
-                'Content-type': 'application/json',
-            }),
-        });
-        return resp.json();
-    }
-
-    async #removePoke(url) {
-        const resp = await fetch(url, {
-            method: 'DELETE',
-        });
-        return resp.json();
+        this.favorites = await apiServices().fetchPoke(URL_FAVORITES);
     }
 
     async changeFavorites(id) {
         if (this.favorites.find((item) => +item.id === +id)) {
-            let resp = await this.#removePoke(URL_FAVORITES + id);
+            let resp = await apiServices().removePoke(URL_FAVORITES + id);
             this.favorites = this.favorites.filter((item) => +item.id !== +id);
             if (document.querySelector('.my-poke-list')) {
                 new MyPokeList('.my-poke-list', this);
@@ -83,9 +59,19 @@ export class State {
             console.log(resp);
         } else {
             const newFavorite = this.pokeData.find((item) => +item.id === +id);
-            let resp = await this.#addPoke(URL_FAVORITES, newFavorite);
+            let resp = await apiServices().addPoke(URL_FAVORITES, newFavorite);
             this.favorites = [...this.favorites, resp];
             console.log(resp);
         }
+    }
+
+    getDetail(origin, pokeId) {
+        let pokeData = null;
+        if (origin === '.my-poke-list__list') {
+            pokeData = this.favorites.find((poke) => poke.id === pokeId);
+        } else {
+            pokeData = this.pokeData.find((poke) => poke.id === pokeId);
+        }
+        return pokeData;
     }
 }
