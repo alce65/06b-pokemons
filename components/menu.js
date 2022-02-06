@@ -1,10 +1,11 @@
 import { Component } from './component.js';
 
 export class Menu extends Component {
-    template;
-    constructor(options) {
+    #template;
+    constructor(selector, options) {
         super();
-        this.template = this.#createTemplate(options);
+        this.#template = this.#createTemplate(options);
+        this.renderOuter(selector, this.#template);
     }
     #createTemplate(options) {
         let template =

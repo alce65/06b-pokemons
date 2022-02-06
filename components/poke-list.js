@@ -1,13 +1,13 @@
 import { Component } from './component.js';
 
 export class PokeList extends Component {
-    #template;
-    #pokeData;
     #state;
+    #pokeData;
+    #template;
     constructor(selector, pokeData, state) {
         super();
-        this.#pokeData = pokeData;
         this.#state = state;
+        this.#pokeData = pokeData;
         this.#template = this.#createTemplate(selector);
         this.render(selector, this.#template);
         this.manageComponent(selector);
@@ -27,6 +27,7 @@ export class PokeList extends Component {
                             src="${poke.sprites?.back_default}" alt="${poke.name}">
                         </span>
                     </a>
+                    <span class="poke-item__fav"></span>
                     <span class="poke-item__fav">
                         <i class="icon--score far fa-heart" data-id=${poke.id}></i>
                     </span>

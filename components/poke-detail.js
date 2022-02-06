@@ -1,10 +1,10 @@
 import { Component } from './component.js';
 
 export class PokeDetail extends Component {
+    #state;
+    #template;
     #pokeId;
     #origin;
-    #template;
-    #state;
     #pokeData;
     constructor(selector, state) {
         super();
@@ -21,7 +21,6 @@ export class PokeDetail extends Component {
                 (poke) => poke.id === this.#pokeId
             );
         }
-
         this.#template = this.#createTemplate();
         this.render(selector, this.#template);
     }
@@ -39,13 +38,13 @@ export class PokeDetail extends Component {
         template += `</div>`;
         return template;
     }
+
     #showPokeData(object) {
         let template = '';
         for (const key in object) {
             if (Object.hasOwnProperty.call(object, key) && key !== 'name') {
                 const value = object[key];
                 if (typeof value === 'object') {
-                    // TODO
                     template += `<li>
                         <details>
                         <summary>${key}:</summary>

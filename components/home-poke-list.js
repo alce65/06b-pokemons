@@ -2,8 +2,8 @@ import { Component } from './component.js';
 import { PokeList } from './poke-list.js';
 
 export class HomePokeList extends Component {
-    #template;
     #state;
+    #template;
     constructor(selector, state) {
         super();
         this.#state = state;

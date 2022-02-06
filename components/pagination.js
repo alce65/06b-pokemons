@@ -1,8 +1,8 @@
 import { Component } from './component.js';
 
 export class Pagination extends Component {
-    #template;
     #state;
+    #template;
     constructor(selector, state) {
         super();
         this.#state = state;
